@@ -2,6 +2,10 @@ const Discord = require("discord.js");
 
 const client = new Discord.Client();
 
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
 client.once("ready", () => {
   console.log("Bot Online!");
 });
@@ -44,5 +48,7 @@ client.on("message", msg => {
     unmute(msg);
   }
 });
+
+console.log("Forced Delay");
 
 client.login(process.env.BOT_SECRET);
