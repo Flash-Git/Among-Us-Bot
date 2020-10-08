@@ -1,0 +1,11 @@
+{
+  "name": "amongusbot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Flash",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "discord.js": "^12.3.1"
+  }
+}
