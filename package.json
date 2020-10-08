@@ -5,7 +5,11 @@
   "author": "Flash",
   "license": "MIT",
   "private": false,
+  "scripts": {
+    "start": "node index.js"
+  },
   "dependencies": {
-    "discord.js": "^12.3.1"
+    "discord.js": "^12.3.1",
+    "request": "2.81.0"
   }
 }
