@@ -25,12 +25,14 @@ client.on("message", msg => {
 
     const voiceChannel = msg.member.voice.channel;
     voiceChannel.members.map(member => member.voice.setMute(true));
+    msg.delete();
   }
 
   if (msg.content.toLowerCase() === "unmute") {
     console.log("Unmuting...");
 
     unmute(msg);
+    msg.delete();
   }
 
   if (msg.content.toLowerCase() === "dead") {
@@ -39,6 +41,7 @@ client.on("message", msg => {
     msg.member.voice.setMute(true);
     if (deadList.includes(msg.member)) return;
     deadList.push(msg.member);
+    msg.delete();
   }
 
   if (msg.content.toLowerCase() === "reset") {
@@ -46,6 +49,7 @@ client.on("message", msg => {
 
     deadList = [];
     unmute(msg);
+    msg.delete();
   }
 });
 
