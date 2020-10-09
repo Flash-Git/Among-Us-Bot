@@ -82,8 +82,6 @@ client.on("message", (msg: Message) => {
   }
 });
 
-// console.log("Starting...");
-
 client.login(process.env.BOT_SECRET);
 
 export default client;
