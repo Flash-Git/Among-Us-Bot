@@ -8,8 +8,8 @@ Unfortunately, as with anything involving the collaboration of 7+ people, you ca
 
 ## Commands
 
-`mute` => Mutes every person in the current voice lobby.
-`unmute` => Unmutes every person in the current voice lobby not marked as dead.
-`dead` => Marks the person typing the command as dead so they won't be unmuted.
-`dead "player name"` => Marks the person as dead so they won't be unmuted.
-`reset` => Unmutes every person in the current voice lobby and unmarks people as dead.
+`mute` => Mutes every person in the current voice lobby.   
+`unmute` => Unmutes every person in the current voice lobby not marked as dead.   
+`dead` => Marks the person typing the command as dead so they won't be unmuted.   
+`dead "player name"` => Marks the person as dead so they won't be unmuted.   
+`reset` => Unmutes every person in the current voice lobby and unmarks people as dead.   
