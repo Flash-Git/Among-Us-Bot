@@ -20,6 +20,11 @@ const muteOne = (member: GuildMember) => {
   member.voice.setMute(true);
 }
 
+const unmuteOne = (member: GuildMember) => {
+  member.voice.setMute(false);
+}
+
+
 const client = new Client();
 
 client.once("ready", () => {
@@ -31,6 +36,11 @@ client.on("message", (msg: Message) => {
 
   const date = new Date();
   const dateMsg = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`
+
+  if (msg.member.voice === null) {
+    console.error(dateMsg + " - Not in Voice!");
+    return;
+  }
 
   switch (message) {
     case "mute":
@@ -77,6 +87,23 @@ client.on("message", (msg: Message) => {
     console.log(dateMsg + " - " + msg.content);
 
     deadList.push(member);
+    msg.delete();
+    return;
+  }
+
+  if (message.startsWith("undead ") || message.startsWith("unmute ")) {
+    const name = message.slice(7);
+    const member = msg.member.voice.channel.members.find(member => member.displayName.toLowerCase() === name);
+
+    if (member === undefined) return;
+
+    unmuteOne(member);
+
+    if (!deadList.includes(member)) return;
+
+    console.log(dateMsg + " - " + msg.content);
+
+    deadList.splice(deadList.indexOf(member))
     msg.delete();
     return;
   }
