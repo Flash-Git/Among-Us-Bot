@@ -74,39 +74,48 @@ client.on("message", (msg: Message) => {
       break;
   }
 
-  if (message.startsWith("dead ") || message.startsWith("mute ")) {
-    const name = message.slice(5);
-    const member = msg.member.voice.channel.members.find(member => member.displayName.toLowerCase() === name);
+  const start = message.substring(0, message.indexOf(" "));
 
-    if (member === undefined) return;
+  let name = "";
+  let command = false;
+  let mute;
 
-    muteOne(member)
+  switch (start) {
+    case "dead":
+    case "mute":
+      command = true;
+      name = message.slice(5);
+      mute = true;
+      break;
 
+    case "undead":
+    case "unmute":
+      command = true;
+      name = message.slice(7);
+      mute = false;
+      break;
+
+    default:
+      break;
+  }
+
+  if (!command) return;
+
+  const member = msg.member.voice.channel.members.find(member => member.displayName.toLowerCase() === name);
+  if (member === undefined) return;
+
+  if (mute === true) {
     if (deadList.includes(member)) return;
-
-    console.log(dateMsg + " - " + msg.content);
-
+    muteOne(member);
     deadList.push(member);
-    msg.delete();
-    return;
   }
-
-  if (message.startsWith("undead ") || message.startsWith("unmute ")) {
-    const name = message.slice(7);
-    const member = msg.member.voice.channel.members.find(member => member.displayName.toLowerCase() === name);
-
-    if (member === undefined) return;
-
-    unmuteOne(member);
-
+  if (mute === false) {
     if (!deadList.includes(member)) return;
-
-    console.log(dateMsg + " - " + msg.content);
-
+    unmuteOne(member)
     deadList.splice(deadList.indexOf(member))
-    msg.delete();
-    return;
   }
+  console.log(dateMsg + " - " + msg.content);
+    msg.delete();
 });
 
 client.login(process.env.BOT_SECRET);
