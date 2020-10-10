@@ -42,42 +42,47 @@ client.on("message", (msg: Message) => {
     return;
   }
 
+  let command = false;
+
+
   switch (message) {
     case "mute":
-      console.log(dateMsg + " - Muting...");
+      command = true;
       muteAll(msg);
-      msg.delete();
-      return;
+      break;
 
     case "unmute":
-      console.log(dateMsg + " - Unmuting...");
+      command = true;
       unmuteAll(msg);
-      msg.delete();
-      return;
+      break;
+
 
     case "dead":
-      console.log(dateMsg + " - Dead...");
+      command = true;
       msg.member.voice.setMute(true);
       if (deadList.includes(msg.member)) return;
       deadList.push(msg.member);
-      msg.delete();
-      return;
+      break;
 
     case "reset":
-      console.log(dateMsg + " - Resetting...");
+      command = true;
       deadList.length = 0;
       unmuteAll(msg);
-      msg.delete();
-      return;
+      break;
 
     default:
       break;
   }
 
+  if (command) {
+    msg.delete();
+    console.log(dateMsg + " - " + msg.content);
+    return;
+  }
+
   const start = message.substring(0, message.indexOf(" "));
 
   let name = "";
-  let command = false;
   let mute;
 
   switch (start) {
@@ -115,7 +120,7 @@ client.on("message", (msg: Message) => {
     deadList.splice(deadList.indexOf(member))
   }
   console.log(dateMsg + " - " + msg.content);
-    msg.delete();
+  msg.delete();
 });
 
 client.login(process.env.BOT_SECRET);
